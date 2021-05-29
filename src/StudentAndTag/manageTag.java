@@ -366,10 +366,10 @@ public class manageTag extends javax.swing.JFrame {
         }
         else
         {
-            if(TableOfTag.getSelectedRow() == 0)
-                JOptionPane.showMessageDialog(null,"Please Select row.");
-            else
+            if(TableOfTag.getRowCount() == 0)
                 JOptionPane.showMessageDialog(null,"Now, Table is Empty.");
+            else
+                JOptionPane.showMessageDialog(null,"Please Select row.");
         }
         
     }//GEN-LAST:event_btnUpdateActionPerformed

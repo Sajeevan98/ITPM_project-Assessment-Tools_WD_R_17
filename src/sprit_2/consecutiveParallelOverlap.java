@@ -65,6 +65,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
         btnViewForParalllel = new javax.swing.JButton();
         cBoxDay = new javax.swing.JComboBox<>();
         cBoxTime = new javax.swing.JComboBox<>();
+        cBoxDuration = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableOfMain_03 = new javax.swing.JTable();
@@ -242,6 +243,15 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
 
         cBoxTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---select time---" }));
 
+        cBoxDuration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---select duration---" }));
+        cBoxDuration.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                cBoxDurationInputMethodTextChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -260,12 +270,15 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cBoxDay, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cBoxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(237, 237, 237)
-                        .addComponent(btnParallel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105)
-                        .addComponent(btnViewForParalllel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cBoxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cBoxDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(237, 237, 237)
+                                .addComponent(btnParallel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(105, 105, 105)
+                                .addComponent(btnViewForParalllel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cBoxDay, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -278,15 +291,19 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnParallel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnViewForParalllel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(59, 59, 59))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cBoxDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cBoxTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnParallel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnViewForParalllel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(42, 42, 42))
+                        .addComponent(cBoxTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cBoxDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))))
         );
 
         TabbedPane.addTab("Parallel", jPanel3);
@@ -376,7 +393,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNonOverlap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnViewForParalllel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -412,8 +429,8 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(TabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addComponent(TabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -487,21 +504,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
     
     // ---Add Non-Overlap Session Button---
     private void btnNonOverlapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNonOverlapActionPerformed
-        switch (nonOverlapFun()) 
-            {
-                case "added":
-                    JOptionPane.showMessageDialog(null,"Non-Overlap Session Successfully Added.");
-                    break;
-                case "replaced":
-                    JOptionPane.showMessageDialog(null,"Successfully Replaced.");
-                    break;
-                case "terminated":
-                    JOptionPane.showMessageDialog(null,"terminated!!!");
-                    break;
-                default:
-                    break;
-            }
-         
+        nonOverlapFun();
     }//GEN-LAST:event_btnNonOverlapActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -518,6 +521,10 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
         sort_3.setRowFilter(RowFilter.regexFilter(search_value));
         
     }//GEN-LAST:event_txtSearch_2KeyReleased
+
+    private void cBoxDurationInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_cBoxDurationInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBoxDurationInputMethodTextChanged
    
     
     //----get data from sprint_2 table----
@@ -557,6 +564,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                 {
                     cBoxDay.addItem(rs.getString("day"));
                     cBoxTime.addItem(rs.getString("time"));
+                    cBoxDuration.addItem(rs.getString("duration"));
                 }
                 conn.close();
             } catch (SQLException ex) {
@@ -663,6 +671,8 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null,"Please Select Day.");
                         else if(cBoxTime.getSelectedItem().toString().isEmpty() || cBoxTime.getSelectedItem().toString().equals("---select time---"))
                             JOptionPane.showMessageDialog(null,"Please Select Time.");
+                        else if(cBoxDuration.getSelectedItem().toString().isEmpty() || cBoxDuration.getSelectedItem().toString().equals("---select duration---"))
+                            JOptionPane.showMessageDialog(null,"Please Select duration.");
                         else
                         {
                             //---start for loop---
@@ -677,7 +687,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                                 column[6] = table1.getValueAt(Index[i], 6);
                                 column[7] = table1.getValueAt(Index[i], 7);        
 
-                                String insertRows= " insert into parallel(Lecturer, SubjectCode, SubjectName, Tag, GroupId, Room, StartTime, Day)" +" values(?,?,?,?,?,?,?,?)";
+                                String insertRows= " insert into parallel(Lecturer, SubjectCode, SubjectName, Tag, GroupId, Room, StartTime, Day, Duration)" +" values(?,?,?,?,?,?,?,?,?)";
                                 pst = conn.prepareStatement(insertRows);
 
                                    if( column[1].toString().isEmpty())
@@ -691,6 +701,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                                             pst.setString(6,  column[7].toString());
                                             pst.setString(7,  cBoxTime.getSelectedItem().toString());
                                             pst.setString(8,  cBoxDay.getSelectedItem().toString());
+                                            pst.setString(9,  cBoxDuration.getSelectedItem().toString());
                                             pst.execute(); 
 
 
@@ -705,6 +716,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                                             pst.setString(6,  column[7].toString());
                                             pst.setString(7,  cBoxTime.getSelectedItem().toString());
                                             pst.setString(8,  cBoxDay.getSelectedItem().toString());
+                                            pst.setString(9,  cBoxDuration.getSelectedItem().toString());
                                             pst.execute(); 
 
                                     }
@@ -766,8 +778,8 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                             rs = pst.executeQuery();
                             if(rs.next()) //---if already exists---
                             {
-                                JOptionPane.showMessageDialog(null,"This Session already exists.");
-                                int response = JOptionPane.showConfirmDialog(null, "Do you want to re-place your selectd row -"+(i+1)+" ?", "Confirm", JOptionPane.YES_NO_OPTION);
+                                JOptionPane.showMessageDialog(null,column[0]+" -row already exists.");
+                                int response = JOptionPane.showConfirmDialog(null, "Do you want to re-place your selectd row -"+column[0]+" ?", "Confirm", JOptionPane.YES_NO_OPTION);
                                 if(response == JOptionPane.YES_OPTION)//---if click 'yes' button---
                                 {
                                     if( column[1].toString().isEmpty())
@@ -786,11 +798,11 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                                         pst = conn.prepareStatement(rePlace);
                                         pst.executeUpdate();
                                     }
-                                    Status = "replaced";
+                                    JOptionPane.showMessageDialog(null,column[0]+" row is replaced.");
                                 }
                                 else
                                 {
-                                    Status = "terminated";
+                                    JOptionPane.showMessageDialog(null,"terminated");
                                     break;
                                 }
                             }
@@ -819,7 +831,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
                                         pst.setString(6, column[7].toString());
                                         pst.execute(); 
                                 }
-                            Status = "added";
+                                JOptionPane.showMessageDialog(null,column[0]+" row is added.");
                             }
                         }//---End for loop--- 
                     } 
@@ -875,6 +887,7 @@ public class consecutiveParallelOverlap extends javax.swing.JFrame {
     private javax.swing.JButton btnViewForParalllel;
     private javax.swing.JButton btnViewForParalllel1;
     private javax.swing.JComboBox<String> cBoxDay;
+    private javax.swing.JComboBox<String> cBoxDuration;
     private javax.swing.JComboBox<String> cBoxTime;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

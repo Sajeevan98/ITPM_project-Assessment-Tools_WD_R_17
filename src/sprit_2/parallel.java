@@ -58,11 +58,11 @@ public class parallel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Lecturer", "Subject Code", "Subject Name", "Tag", "GroupId", "Room", "StartTime", "Day"
+                "ID", "Lecturer", "Subject Code", "Subject Name", "Tag", "GroupId", "Room", "StartTime", "Day", "Duration"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

@@ -471,10 +471,10 @@ public class manageStudentGroups extends javax.swing.JFrame {
         }
         else
         {
-            if(TableOfStudentsGroups.getSelectedRow() == 0)
-                JOptionPane.showMessageDialog(null,"Please Select row.");
+            if(TableOfStudentsGroups.getRowCount()== 0)
+                JOptionPane.showMessageDialog(null,"Now, Table is Empty.");
             else
-                 JOptionPane.showMessageDialog(null,"Now, Table is Empty.");
+                 JOptionPane.showMessageDialog(null,"Please Select row.");
         }
            
             

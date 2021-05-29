@@ -28,6 +28,7 @@ public class nonOverlapping extends javax.swing.JFrame {
     
     public nonOverlapping() {
         initComponents();
+        getData();
     }
 
     /**
@@ -57,11 +58,11 @@ public class nonOverlapping extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Lecturer_01", "Lecturer_02", "Subject Code", "Subject Name", "Tag", "GroupId", "Room"
+                "ID", "Lecturer", "Subject Code", "Subject Name", "Tag", "GroupId", "Room"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

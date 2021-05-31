@@ -6,9 +6,12 @@
 package sprit_2;
 import forConnection.connect;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
 
@@ -25,6 +28,7 @@ public class addSession extends javax.swing.JFrame {
     public addSession() {
         initComponents();
         getData();
+        getData2();
     }
 
     /**
@@ -44,6 +48,10 @@ public class addSession extends javax.swing.JFrame {
         txtSerach = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        cBoxDay = new javax.swing.JComboBox<>();
+        cBoxTime = new javax.swing.JComboBox<>();
+        cBoxDuration = new javax.swing.JComboBox<>();
+        btnNonOverlap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,45 +118,95 @@ public class addSession extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(6, 6, 182));
         jLabel1.setText("Consecutive Sessions");
 
+        cBoxDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---select day---" }));
+        cBoxDay.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                cBoxDayInputMethodTextChanged(evt);
+            }
+        });
+
+        cBoxTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---select time---" }));
+
+        cBoxDuration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---select duration---" }));
+        cBoxDuration.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                cBoxDurationInputMethodTextChanged(evt);
+            }
+        });
+
+        btnNonOverlap.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnNonOverlap.setForeground(new java.awt.Color(23, 148, 23));
+        btnNonOverlap.setText("Add Non-Overlapping");
+        btnNonOverlap.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(21, 131, 20), 2, true));
+        btnNonOverlap.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNonOverlap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNonOverlapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1157, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(392, 392, 392)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(265, 265, 265)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSerach, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSerach, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1157, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cBoxDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cBoxDay, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cBoxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(btnNonOverlap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(49, 49, 49))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(528, 528, 528))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnBack)
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSerach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtSerach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1))))
                 .addGap(18, 18, 18)
-                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cBoxDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cBoxTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNonOverlap, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cBoxDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,7 +217,7 @@ public class addSession extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -257,7 +315,121 @@ public class addSession extends javax.swing.JFrame {
        tableOfConsecutiveSessions.setRowSorter(sort);
        sort.setRowFilter(RowFilter.regexFilter(search_value));
     }//GEN-LAST:event_txtSerachKeyReleased
+
+    private void cBoxDayInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_cBoxDayInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBoxDayInputMethodTextChanged
+
+    private void cBoxDurationInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_cBoxDurationInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBoxDurationInputMethodTextChanged
+
+    private void btnNonOverlapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNonOverlapActionPerformed
+       nextMoveConsecutive();
+    }//GEN-LAST:event_btnNonOverlapActionPerformed
     
+    //----get data for comboBox from day_time table----
+    public void getData2()
+    {
+       try {
+                conn = cObj.getConnection();//---get connection---
+                String q_2 = " select * from day_time ";
+                pst = conn.prepareStatement(q_2); //---Execute Query---
+             
+                rs = pst.executeQuery(); //---comboBox---
+                while(rs.next())
+                {
+                    cBoxDay.addItem(rs.getString("day"));
+                    cBoxTime.addItem(rs.getString("time"));
+                    cBoxDuration.addItem(rs.getString("duration"));
+                }
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(consecutiveParallelOverlap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    public void nextMoveConsecutive(){
+        try {
+                conn = cObj.getConnection();//---get connection---
+                TableModel table1 = tableOfConsecutiveSessions.getModel();
+                int [] Index = tableOfConsecutiveSessions.getSelectedRows();
+                Object [] column = new Object[10];
+                            
+                if(tableOfConsecutiveSessions.getSelectedRowCount()== 0)
+                    JOptionPane.showMessageDialog(null,"Please select Row.");
+                else 
+                {   
+                    if(tableOfConsecutiveSessions.getSelectedRowCount() >0  )
+                    {   
+                        //---start for loop---
+                        for(int i=0; i<Index.length; i++)
+                        {
+                            column[0] = table1.getValueAt(Index[i], 0);
+                            column[1] = table1.getValueAt(Index[i], 1); //Lecturers
+                            column[2] = table1.getValueAt(Index[i], 2);
+                            column[3] = table1.getValueAt(Index[i], 3);
+                            column[4] = table1.getValueAt(Index[i], 4);
+                            column[5] = table1.getValueAt(Index[i], 5);
+                            column[6] = table1.getValueAt(Index[i], 6);
+                            column[7] = cBoxTime.getSelectedItem().toString();
+                            column[8] = cBoxDay.getSelectedItem().toString();
+                            column[9] = cBoxDuration.getSelectedItem().toString();
+                                                        
+                            int id = (int) column[0];
+                            String lecs = column[1].toString();
+                            String sCode = column[2].toString();
+                            String sName = column[3].toString();
+                            String tag = column[4].toString();
+                            String gId = column[5].toString();
+                            String room = column[6].toString();
+                            String time = column[7].toString();
+                            String day = column[8].toString();
+                            String duration = column[9].toString();
+                           
+                            //-----access non-Overlapping DataBase & check already exists------
+                            String checkQuery = " SELECT * FROM non_overlap WHERE  Lecturer ='"+lecs+"' AND StartTime='"+time+"' AND Day='"+day+"'  OR  GroupId='"+gId+"' AND StartTime='"+time+"' AND Day='"+day+"'  OR  Room='"+room+"' AND Day='"+day+"' AND StartTime='"+time+"' ";
+                            pst = conn.prepareStatement(checkQuery);          //           ----1st Condision----                                   (or)                ----2nd Condision----                          (or)                    ----3rd Condision----
+                            rs = pst.executeQuery();
+                            if(rs.next()) //---if already exists---
+                            {
+                                if(rs.getString("Lecturer").equals(lecs) && rs.getString("SubjectCode").equals(sCode) && rs.getString("StartTime").equals(time) && rs.getString("Day").equals(day))
+                                   JOptionPane.showMessageDialog(null, "This Session already exist.");
+                                else if(rs.getString("Lecturer").equals(lecs) && rs.getString("StartTime").equals(time) && rs.getString("Day").equals(day) && ! rs.getString("SubjectCode").equals(sCode))
+                                    JOptionPane.showMessageDialog(null, "Class is already available for this LECTURER at this time of day.");
+                                
+                                else if(rs.getString("GroupId").equals(gId) && rs.getString("StartTime").equals(time) && rs.getString("Day").equals(day) && ! rs.getString("SubjectCode").equals(sCode))
+                                    JOptionPane.showMessageDialog(null, "Class is already available for this GROUP at this time of day.");
+                                
+                                else if(rs.getString("Room").equals(room) && rs.getString("StartTime").equals(time) && rs.getString("Day").equals(day) && ! rs.getString("SubjectCode").equals(sCode))
+                                    JOptionPane.showMessageDialog(null, "Class is already available to this HALL at this time of day.");
+                            }
+                            else
+                            {
+                                String insertRows= " insert into non_overlap(Lecturer, SubjectCode, SubjectName, Tag, GroupId, Room, StartTime, Day, Duration)" +" values(?,?,?,?,?,?,?,?,?)";
+                                pst = conn.prepareStatement(insertRows);
+                                       
+                                        pst.setString(1, lecs);
+                                        pst.setString(2, sCode);
+                                        pst.setString(3, sName);
+                                        pst.setString(4, tag);
+                                        pst.setString(5, gId);
+                                        pst.setString(6, room);
+                                        pst.setString(7, time);
+                                        pst.setString(8, day);
+                                        pst.setString(9, duration);
+                                        pst.execute(); 
+
+                                JOptionPane.showMessageDialog(null,id+" row is added.");
+                            }
+                        }//---End for loop--- 
+                    } 
+                    conn.close(); //---close connection---
+                }
+            }catch(Exception ex){
+            
+            }
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -295,7 +467,11 @@ public class addSession extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnNonOverlap;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JComboBox<String> cBoxDay;
+    private javax.swing.JComboBox<String> cBoxDuration;
+    private javax.swing.JComboBox<String> cBoxTime;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

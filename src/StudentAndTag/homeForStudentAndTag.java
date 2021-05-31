@@ -5,6 +5,7 @@
  */
 package StudentAndTag;
 
+import sprit_2.PrintAndGenerateTimetable;
 import sprit_2.consecutiveParallelOverlap;
 
 /**
@@ -69,10 +70,15 @@ public class homeForStudentAndTag extends javax.swing.JFrame {
         });
 
         jButton4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(204, 204, 204));
+        jButton4.setForeground(new java.awt.Color(255, 0, 51));
         jButton4.setText("Generate Timetable");
-        jButton4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 4, true));
+        jButton4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 0), 4, true));
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jButton5.setForeground(new java.awt.Color(92, 9, 92));
@@ -162,6 +168,12 @@ public class homeForStudentAndTag extends javax.swing.JFrame {
         sprint_2.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        PrintAndGenerateTimetable print = new PrintAndGenerateTimetable();
+        print.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,17 +5,27 @@
  */
 package sprit_2;
 
+import StudentAndTag.homeForStudentAndTag;
+import forConnection.connect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sajee
  */
 public class PrintAndGenerateTimetable extends javax.swing.JFrame {
-
-    /**
-     * Creates new form PrintAndGenerateTimetable
-     */
+    PreparedStatement pst;
+    ResultSet rs;
+    connect cObj = new connect(); //---create object to connect class---
+    Connection conn;
+    
     public PrintAndGenerateTimetable() {
         initComponents();
+        getData();
     }
 
     /**
@@ -29,84 +39,245 @@ public class PrintAndGenerateTimetable extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         LECTURESCombo = new javax.swing.JComboBox<>();
-        Generate1 = new javax.swing.JButton();
-        Generate2 = new javax.swing.JButton();
+        GenerateStu = new javax.swing.JButton();
+        GenerateLec = new javax.swing.JButton();
         StudentsCombo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtTimetable = new javax.swing.JTextArea();
         print = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 255));
 
-        LECTURESCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.setBackground(new java.awt.Color(242, 187, 187));
 
-        Generate1.setText("Generate");
+        LECTURESCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---select Lecturer--" }));
 
-        Generate2.setText("Generate");
+        GenerateStu.setText("Generate");
+        GenerateStu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenerateStuActionPerformed(evt);
+            }
+        });
 
-        StudentsCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        GenerateLec.setText("Generate");
+        GenerateLec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenerateLecActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        StudentsCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---select Group Id---" }));
+
+        txtTimetable.setColumns(20);
+        txtTimetable.setRows(5);
+        jScrollPane1.setViewportView(txtTimetable);
 
         print.setText("PRINT");
+
+        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 10)); // NOI18N
+        jButton1.setText("refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 10)); // NOI18N
+        jButton2.setText("back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(print, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(StudentsCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Generate2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(LECTURESCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Generate1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(32, 32, 32)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                            .addComponent(StudentsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(GenerateLec, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LECTURESCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(GenerateStu, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(20, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(print, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(357, 357, 357))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(LECTURESCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(Generate1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
                         .addComponent(StudentsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(Generate2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28)
-                .addComponent(print, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(GenerateStu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(135, 135, 135)
+                        .addComponent(LECTURESCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(GenerateLec, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(print, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void GenerateStuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateStuActionPerformed
+        try {
+                String gId = StudentsCombo.getSelectedItem().toString();
+                conn = cObj.getConnection(); //---get connection---
+                String q = " select * from  non_overlap Where GroupId='"+gId+"' ";
+                pst = conn.prepareStatement(q);
+                rs = pst.executeQuery();
+                while(rs.next())
+                {
+                    String lec = rs.getString("Lecturer");
+                    String sCode = rs.getString("SubjectCode");
+                    String sName = rs.getString("SubjectName");
+                    String tag = rs.getString("Tag");
+                    String groupId = rs.getString("GroupId");
+                    String room = rs.getString("Room");
+                    String sTime = rs.getString("StartTime");
+                    String day = rs.getString("Day");
+                    String duration = rs.getString("Duration");
+                    
+                    String AllDataForStu = lec+", "+sName+"("+sCode+"), "+tag+", "+groupId+", "+room ;  
+                    JOptionPane.showMessageDialog(null, day +" - "+sTime+ " >>>> "+ AllDataForStu);
+                    
+                    String [] Days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+                    String [] Time = {"8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30"};
+                    
+                    txtTimetable.append("Time Solts : \t\t");
+                    for(int i=0; i<Days.length;i++)
+                    {
+                        if(Days[i].equals(day))
+                        {
+                            txtTimetable.append(day +" - "+sTime+ " >>>> "+ AllDataForStu);
+                            JOptionPane.showMessageDialog(null, day +" - "+sTime+ " >>>> "+ AllDataForStu);
+                        }
+                            
+                    }
+                    txtTimetable.append("\n ======================================================================================\n");
+                }
+                conn.close();
+            }catch (SQLException ex) {
+                System.err.println("Go to an exception!!!");                              
+                JOptionPane.showConfirmDialog(null, ex.getMessage());
+            }
+    }//GEN-LAST:event_GenerateStuActionPerformed
+
+    private void GenerateLecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateLecActionPerformed
+        try {
+                String lecturer = LECTURESCombo.getSelectedItem().toString();
+                conn = cObj.getConnection(); //---get connection---
+                String q = " select * from  non_overlap Where Lecturer='"+lecturer+"' ";
+                pst = conn.prepareStatement(q);
+                rs = pst.executeQuery();
+                while(rs.next())
+                {
+                    String lec = rs.getString("Lecturer");
+                    String sCode = rs.getString("SubjectCode");
+                    String sName = rs.getString("SubjectName");
+                    String tag = rs.getString("Tag");
+                    String groupId = rs.getString("GroupId");
+                    String room = rs.getString("Room");
+                    String sTime = rs.getString("StartTime");
+                    String day = rs.getString("Day");
+                    String duration = rs.getString("Duration");
+                    
+                    String AllDataForLec = lec+", "+sName+"("+sCode+"), "+tag+", "+groupId+", "+room ;  
+                    JOptionPane.showMessageDialog(null, day +" - "+sTime+ " >>>> "+ AllDataForLec);
+                    
+                    String [] Days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+                    String [] Time = {"8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30"};
+                    
+                    txtTimetable.append("Time Solts : \t\t");
+                    for(int i=0; i<Days.length;i++)
+                    {
+                        if(Days[i].equals(day))
+                        {
+                            txtTimetable.append(day +" - "+sTime+ " >>>> "+ AllDataForLec);
+                            JOptionPane.showMessageDialog(null, day +" - "+sTime+ " >>>> "+ AllDataForLec);
+                        }
+                            
+                    }
+                    txtTimetable.append("\n ======================================================================================\n");
+                 }
+                conn.close();
+            }catch (SQLException ex) {
+                System.err.println("Go to an exception!!!");                              
+                JOptionPane.showConfirmDialog(null, ex.getMessage());
+            }
+    }//GEN-LAST:event_GenerateLecActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        PrintAndGenerateTimetable here = new PrintAndGenerateTimetable();
+        here.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        homeForStudentAndTag Home = new homeForStudentAndTag();
+        Home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public void getData(){
+        try {
+                conn = cObj.getConnection();//---get connection---
+                String q_2 = " select * from non_overlap ";
+                pst = conn.prepareStatement(q_2); //---Execute Query---
+             
+                rs = pst.executeQuery(); //---comboBox---
+                while(rs.next())
+                {
+                    LECTURESCombo.addItem(rs.getString("Lecturer"));
+                    StudentsCombo.addItem(rs.getString("GroupId"));
+                    
+                }
+            
+            }catch (SQLException ex) {
+                System.err.println("Go to an exception!!!");                              
+                JOptionPane.showConfirmDialog(null, ex.getMessage());
+            }
+    }
     /**
      * @param args the command line arguments
      */
@@ -143,13 +314,15 @@ public class PrintAndGenerateTimetable extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Generate1;
-    private javax.swing.JButton Generate2;
+    private javax.swing.JButton GenerateLec;
+    private javax.swing.JButton GenerateStu;
     private javax.swing.JComboBox<String> LECTURESCombo;
     private javax.swing.JComboBox<String> StudentsCombo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton print;
+    private javax.swing.JTextArea txtTimetable;
     // End of variables declaration//GEN-END:variables
 }
